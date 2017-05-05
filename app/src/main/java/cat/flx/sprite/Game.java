@@ -21,6 +21,7 @@ class Game {
     private List<Spear> spears;
     private int screenOffsetX, screenOffsetY;
     private int spearCounter = 0;
+    private int enemyCounter = 0;
 
     Game(Activity activity) {
         this.context = activity;
@@ -50,29 +51,17 @@ class Game {
     }
     List<Coin> getCoins() { return coins; }
 
-    void addEnemy(Enemy enemy) {
-        enemies.add(enemy);
-    }
-    List<Enemy> getEnemies() { return enemies; }
-
-    void addSpear(Spear spear) {
-        spears.add(spear);
-    }
-    List<Spear> getSpears() { return spears; }
     void physics() {
         bonk.physics();
+        enemyCounter++;
+        spearCounter ++;
         for(Enemy enemy : enemies) {
             enemy.physics();
             if (bonk.state == 3) continue;
             if (enemy.getCollisionRect().intersect(bonk.getCollisionRect())) {
-                if (bonk.vy > 0) {
-                    enemy.x = -1000;
-                    enemy.y = -1000;
-                }
-                else {
+
                     audio.die();
                     bonk.state = 3;
-                }
             }
         }
         for (Spear spear : spears){
@@ -115,6 +104,11 @@ class Game {
         scene.draw(canvas);
         bonk.draw(canvas);
 
+        if (enemyCounter > 500){
+            enemies.add(new Enemy(this));
+            enemyCounter = 0;
+        }
+
         for(Enemy enemy : enemies) {
             enemy.draw(canvas);
         }
@@ -125,7 +119,7 @@ class Game {
             spears.add(new Spear(this));
             spearCounter = 0;
         }
-        spearCounter ++;
+
         for(Spear spear : spears) {
             spear.draw(canvas);
         }

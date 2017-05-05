@@ -54,17 +54,6 @@ class Scene {
                     game.addCoin(coin);
                     continue;
                 }
-                if (line.startsWith("ENEMY=")) {
-                    String[] parts = line.split("=");
-                    String[] coors = parts[1].trim().split(",");
-                    Enemy enemy = new Enemy(game);
-                    enemy.x1 = Integer.parseInt(coors[0].trim()) * 16;
-                    enemy.x2 = Integer.parseInt(coors[1].trim()) * 16;
-                    enemy.y = Integer.parseInt(coors[2].trim()) * 16 - 6;
-                    enemy.x = enemy.x1;
-                    game.addEnemy(enemy);
-                    continue;
-                }
                 lines.add(line);
             }
             scene = lines.toArray(new String[0]);
