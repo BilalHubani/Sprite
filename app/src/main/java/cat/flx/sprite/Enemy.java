@@ -11,6 +11,7 @@ public class Enemy {
     int[][] getStates() { return states; }
     Game game;
     private int spriteIdx;
+    int idxCounter;
     int x, y, vy,vx, newy, newx, dir, xCounter;
     int padLeft, padTop, colWidth, colHeight;
     Enemy(Game game) {
@@ -23,6 +24,7 @@ public class Enemy {
         xCounter = 0;
         vx = 3;
         spriteIdx = 1;
+        idxCounter = 0;
     }
     private Rect colRect = new Rect();
     Rect getCollisionRect() {
@@ -30,7 +32,7 @@ public class Enemy {
         return colRect;
     }
     void draw(Canvas canvas) {
-        game.getSpearBitmapSet().drawBitmap(canvas, x, y, spriteIdx);
+        game.getDragonBitmapSet().drawBitmap(canvas, x, y, spriteIdx);
     }
     void physics() {
 
@@ -88,5 +90,26 @@ public class Enemy {
         x = newx;
         y = newy;
         xCounter = xCounter + vx;
+        idxCounter++;
+        if (vx > 0) {
+            if (spriteIdx > 3)
+                spriteIdx = 0;
+            if (idxCounter>3) {
+                spriteIdx++;
+                idxCounter = 0;
+                if (spriteIdx > 3)
+                    spriteIdx = 0;
+            }
+        }
+        if (vx < 0) {
+            if (spriteIdx<4)
+                spriteIdx = 4;
+            if (idxCounter>7) {
+                spriteIdx++;
+                idxCounter = 4;
+                if (spriteIdx > 7)
+                    spriteIdx = 4;
+            }
+        }
     }
 }

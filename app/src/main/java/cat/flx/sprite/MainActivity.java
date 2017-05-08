@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Game game;
     ImageButton pause;
     ImageButton speed;
+    ImageButton restart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,11 @@ public class MainActivity extends AppCompatActivity {
         final GameView gameView = (GameView) findViewById(R.id.view);
         pause = (ImageButton) findViewById(R.id.pause);
         speed = (ImageButton) findViewById(R.id.speed);
+        restart = (ImageButton) findViewById(R.id.imageButton);
         gameView.setPauseButton(pause);
         gameView.setSpeedButton(speed);
+        gameView.setRestart(restart);
+        restart.setVisibility(View.INVISIBLE);
         game = new Game(this);
         gameView.setGame(game);
         pause.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +61,13 @@ public class MainActivity extends AppCompatActivity {
                     gameView.setSpeed(50);
                     speed.setBackgroundResource(ic_media_ff);
                 }
+            }
+        });
+        restart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                game.Start();
+                restart.setVisibility(View.INVISIBLE);
             }
         });
     }

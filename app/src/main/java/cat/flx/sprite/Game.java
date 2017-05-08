@@ -13,6 +13,7 @@ class Game {
 
     private BitmapSet bitmapSet;
     private SpearBitmapSet spearBitmapSet;
+    private DragonBitmapSet dragonBitmapSet;
     private Scene scene;
     private Bonk bonk;
     private Audio audio;
@@ -25,9 +26,13 @@ class Game {
 
     Game(Activity activity) {
         this.context = activity;
+        audio = new Audio(activity);
+        Start();
+    }
+    void Start(){
         bitmapSet = new BitmapSet(context.getResources());
         spearBitmapSet = new SpearBitmapSet(context.getResources());
-        audio = new Audio(activity);
+        dragonBitmapSet = new DragonBitmapSet(context.getResources());
         scene = new Scene(this);
         bonk = new Bonk(this);
         coins = new ArrayList<>();
@@ -42,6 +47,7 @@ class Game {
 
     BitmapSet getBitmapSet() { return bitmapSet; }
     SpearBitmapSet getSpearBitmapSet() {return spearBitmapSet; }
+    DragonBitmapSet getDragonBitmapSet() {return dragonBitmapSet; }
     Scene getScene() { return scene; }
     Audio getAudio() { return audio; }
     Bonk getBonk() { return bonk; }
@@ -59,7 +65,6 @@ class Game {
             enemy.physics();
             if (bonk.state == 3) continue;
             if (enemy.getCollisionRect().intersect(bonk.getCollisionRect())) {
-
                     audio.die();
                     bonk.state = 3;
             }

@@ -14,7 +14,7 @@ class GameView extends View {
 
     Game game;
     private int speed = 50;
-    private ImageButton pauseButton, speedButton;
+    private ImageButton pauseButton, speedButton,restart;
     private boolean paused = false;
 
 
@@ -44,6 +44,8 @@ class GameView extends View {
             game.physics();
             game.draw(canvas);
             locked = false;
+            if (game.getBonk().state == 3)
+                restart.setVisibility(VISIBLE);
         }else{
             game.draw(canvas);
         }
@@ -107,5 +109,13 @@ class GameView extends View {
 
     public void setPaused(boolean paused) {
         this.paused = paused;
+    }
+
+    public ImageButton getRestart() {
+        return restart;
+    }
+
+    public void setRestart(ImageButton restart) {
+        this.restart = restart;
     }
 }
